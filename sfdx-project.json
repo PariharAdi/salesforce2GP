@@ -1,0 +1,27 @@
+{
+  "packageDirectories": [
+    {
+      "path": "force-app",
+      "default": true,
+      "package": "salesForcePkg",
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT"
+    },
+    {
+      "versionName": "ver 0.1",
+      "versionNumber": "0.1.0.NEXT",
+      "path": "force-app",
+      "default": false,
+      "package": "salesForceExamplePkg",
+      "versionDescription": ""
+    }
+  ],
+  "name": "apexBackend",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "64.0",
+  "packageAliases": {
+    "salesForceExamplePkg": "0HoF9000000008zKAA",
+    "salesForceExamplePkg@0.1.0-1": "04tF9000000NsjFIAS"
+  }
+}
