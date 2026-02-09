@@ -1,0 +1,35 @@
+name: CI/CD for 2GP Package
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: npm install @salesforce/cli --global
+
+      - name: Authenticate Dev Hub
+        run: |
+          echo "${{ secrets.SF_JWT_KEY }}" > server.key
+          sf org login jwt --client-id ${{ secrets.SF_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_DEV_HUB_USER }} --set-default-dev-hub --instance-url https://login.salesforce.com
+
+      - name: Create Package Version
+        id: create_version
+        run: |
+          # Creates version and captures the 04t ID from the JSON output
+          RESULT=$(sf package version create --package "salesForceExamplePkg" --installation-key-bypass --wait 20 --json)
+          PACKAGE_ID=$(echo $RESULT | jq -r '.result.SubscriberPackageVersionId')
+          echo "PACKAGE_ID=$PACKAGE_ID" >> $GITHUB_ENV
+
+      - name: Authenticate Target Org
+        run: |
+          sf org login jwt --client-id ${{ secrets.SF_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_TARGET_ORG_USER }} --instance-url https://login.salesforce.com
+
+      - name: Install Package in Target Org
+        run: |
+          sf package install --package ${{ env.PACKAGE_ID }} --target-org ${{ secrets.SF_TARGET_ORG_USER }} --wait 20 --no-prompt
