@@ -32,6 +32,11 @@
                 </lightning-input>
             </div>
 
+            <div class="slds-m-bottom_small">
+                <lightning-input label="Site" value={accountSite} onchange={handleSiteChange}>
+                </lightning-input>
+            </div>
+
             <lightning-button variant="brand" label="Create Account" onclick={handleCreateAccount} disabled={isLoading}>
             </lightning-button>
         </div>
@@ -62,6 +67,7 @@
                                         <p>Industry: {account.Industry}</p>
                                         <p>Phone: {account.Phone}</p>
                                         <p>Description: {account.Description}</p>
+                                        <p>Site: {account.Site}</p>
                                     </template>
                                     <template if:true={editRecordId}>
                                         <template if:false={isEditingThisRow}>
@@ -69,6 +75,7 @@
                                             <p>Industry: {account.Industry}</p>
                                             <p>Phone: {account.Phone}</p>
                                             <p>Description: {account.Description}</p>
+                                            <p>Site: {account.Site}</p>
                                         </template>
                                     </template>
 
@@ -83,6 +90,8 @@
                                                 onchange={handleEditFieldChange}></lightning-input>
                                             <lightning-input name="editDescription" label="Description"
                                                 value={editDescription}
+                                                onchange={handleEditFieldChange}></lightning-input>
+                                            <lightning-input name="editSite" label="Site" value={editSite}
                                                 onchange={handleEditFieldChange}></lightning-input>
                                         </template>
                                     </template>

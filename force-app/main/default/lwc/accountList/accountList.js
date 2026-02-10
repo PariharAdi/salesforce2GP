@@ -16,6 +16,7 @@ export default class AccountList extends LightningElement {
     accountIndustry = '';
     accountPhone = '';
     accountDescription = '';
+    accountSite = '';
 
     // Edit form state
     @track editRecordId = null;
@@ -23,6 +24,7 @@ export default class AccountList extends LightningElement {
     @track editIndustry = '';
     @track editPhone = '';
     @track editDescription = '';
+    @track editSite = '';
 
     // Wire service to get accounts automatically
     @wire(getAccounts)
@@ -55,6 +57,10 @@ export default class AccountList extends LightningElement {
         this.accountDescription = event.target.value;
     }
 
+    handleSiteChange(event) {
+        this.accountSite = event.target.value;
+    }
+
     // Create new account
     handleCreateAccount() {
         if (!this.accountName) {
@@ -68,7 +74,8 @@ export default class AccountList extends LightningElement {
             name: this.accountName,
             industry: this.accountIndustry,
             phone: this.accountPhone,
-            description: this.accountDescription
+            description: this.accountDescription,
+            site: this.accountSite
         })
             .then(result => {
                 this.showToast('Success', 'Account created successfully', 'success');
@@ -77,6 +84,7 @@ export default class AccountList extends LightningElement {
                 this.accountIndustry = '';
                 this.accountPhone = '';
                 this.accountDescription = '';
+                this.accountSite = '';
                 // Refresh the account list
                 return refreshApex(this.wiredAccountsResult);
             })
@@ -137,6 +145,7 @@ export default class AccountList extends LightningElement {
         this.editIndustry = record.Industry || '';
         this.editPhone = record.Phone || '';
         this.editDescription = record.Description || '';
+        this.editSite = record.Site || '';
     }
 
     handleEditFieldChange(event) {
@@ -146,6 +155,7 @@ export default class AccountList extends LightningElement {
         if (field === 'editIndustry') this.editIndustry = value;
         if (field === 'editPhone') this.editPhone = value;
         if (field === 'editDescription') this.editDescription = value;
+        if (field === 'editSite') this.editSite = value;
     }
 
     handleCancelEdit() {
@@ -154,6 +164,7 @@ export default class AccountList extends LightningElement {
         this.editIndustry = '';
         this.editPhone = '';
         this.editDescription = '';
+        this.editSite = '';
     }
 
     // Save updates for a specific account
@@ -174,7 +185,8 @@ export default class AccountList extends LightningElement {
             name: this.editName,
             industry: this.editIndustry,
             phone: this.editPhone,
-            description: this.editDescription
+            description: this.editDescription,
+            site: this.editSite
         })
             .then(() => {
                 this.showToast('Success', 'Account updated successfully', 'success');
