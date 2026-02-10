@@ -30,14 +30,15 @@ private class AccountControllerTest {
     @IsTest
     static void testCreateAccount_Success() {
         Test.startTest();
-        String newId = AccountController.createAccount('Created Via Controller', 'Energy', '222');
+        String newId = AccountController.createAccount('Created Via Controller', 'Energy', '222', 'Desc from test');
         Test.stopTest();
 
         System.assertNotEquals(null, newId, 'createAccount should return Id');
-        Account created = [SELECT Id, Name, Industry, Phone FROM Account WHERE Id = :newId];
+        Account created = [SELECT Id, Name, Industry, Phone, Description FROM Account WHERE Id = :newId];
         System.assertEquals('Created Via Controller', created.Name);
         System.assertEquals('Energy', created.Industry);
         System.assertEquals('222', created.Phone);
+        System.assertEquals('Desc from test', created.Description);
     }
 
     @IsTest
@@ -45,13 +46,14 @@ private class AccountControllerTest {
         Account existing = [SELECT Id FROM Account LIMIT 1];
 
         Test.startTest();
-        AccountController.updateAccount(existing.Id, 'Updated Cntrl', 'Banking', '333');
+        AccountController.updateAccount(existing.Id, 'Updated Cntrl', 'Banking', '333', 'Updated description');
         Test.stopTest();
 
-        Account updated = [SELECT Id, Name, Industry, Phone FROM Account WHERE Id = :existing.Id];
+        Account updated = [SELECT Id, Name, Industry, Phone, Description FROM Account WHERE Id = :existing.Id];
         System.assertEquals('Updated Cntrl', updated.Name);
         System.assertEquals('Banking', updated.Industry);
         System.assertEquals('333', updated.Phone);
+        System.assertEquals('Updated description', updated.Description);
     }
 
     @IsTest
