@@ -28,7 +28,7 @@ jobs:
 
       - name: Authenticate Target Org
         run: |
-          sf org login jwt --client-id ${{ secrets.SF_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_TARGET_ORG_USER }} --instance-url https://login.salesforce.com
+          sf org login jwt --client-id ${{ secrets.SF_TARGET_CLIENT_ID }} --jwt-key-file server.key --username ${{ secrets.SF_TARGET_ORG_USER }} --instance-url https://login.salesforce.com
 
       - name: Install Package in Target Org
         run: |
