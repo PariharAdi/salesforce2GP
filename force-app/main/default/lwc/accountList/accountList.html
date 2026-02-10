@@ -27,6 +27,11 @@
                 </div>
             </div>
 
+            <div class="slds-m-bottom_small">
+                <lightning-input label="Description" value={accountDescription} onchange={handleDescriptionChange}>
+                </lightning-input>
+            </div>
+
             <lightning-button variant="brand" label="Create Account" onclick={handleCreateAccount} disabled={isLoading}>
             </lightning-button>
         </div>
@@ -56,21 +61,29 @@
                                         <h4 class="slds-text-heading_small">{account.Name}</h4>
                                         <p>Industry: {account.Industry}</p>
                                         <p>Phone: {account.Phone}</p>
+                                        <p>Description: {account.Description}</p>
                                     </template>
                                     <template if:true={editRecordId}>
                                         <template if:false={isEditingThisRow}>
                                             <h4 class="slds-text-heading_small">{account.Name}</h4>
                                             <p>Industry: {account.Industry}</p>
                                             <p>Phone: {account.Phone}</p>
+                                            <p>Description: {account.Description}</p>
                                         </template>
                                     </template>
 
                                     <!-- Edit mode for the current row -->
                                     <template if:true={editRecordId}>
                                         <template if:true={isEditingThisRow}>
-                                            <lightning-input name="editName" label="Name" value={editName} onchange={handleEditFieldChange} required></lightning-input>
-                                            <lightning-input name="editIndustry" label="Industry" value={editIndustry} onchange={handleEditFieldChange}></lightning-input>
-                                            <lightning-input name="editPhone" label="Phone" value={editPhone} onchange={handleEditFieldChange}></lightning-input>
+                                            <lightning-input name="editName" label="Name" value={editName}
+                                                onchange={handleEditFieldChange} required></lightning-input>
+                                            <lightning-input name="editIndustry" label="Industry" value={editIndustry}
+                                                onchange={handleEditFieldChange}></lightning-input>
+                                            <lightning-input name="editPhone" label="Phone" value={editPhone}
+                                                onchange={handleEditFieldChange}></lightning-input>
+                                            <lightning-input name="editDescription" label="Description"
+                                                value={editDescription}
+                                                onchange={handleEditFieldChange}></lightning-input>
                                         </template>
                                     </template>
                                 </div>
@@ -78,23 +91,31 @@
                                     <!-- Row action buttons -->
                                     <template if:true={editRecordId}>
                                         <template if:true={isEditingThisRow}>
-                                            <lightning-button variant="neutral" label="Cancel" onclick={handleCancelEdit}></lightning-button>
-                                            <lightning-button class="slds-m-left_x-small" variant="brand" label="Save" onclick={handleSaveEdit} disabled={isLoading}></lightning-button>
+                                            <lightning-button variant="neutral" label="Cancel"
+                                                onclick={handleCancelEdit}></lightning-button>
+                                            <lightning-button class="slds-m-left_x-small" variant="brand" label="Save"
+                                                onclick={handleSaveEdit} disabled={isLoading}></lightning-button>
                                         </template>
                                         <template if:false={isEditingThisRow}>
-                                            <lightning-button variant="neutral" label="Edit" data-id={account.Id} onclick={handleStartEdit}></lightning-button>
-                                            <lightning-button class="slds-m-left_x-small" variant="destructive" label="Delete" data-id={account.Id} onclick={handleDeleteAccount}></lightning-button>
+                                            <lightning-button variant="neutral" label="Edit" data-id={account.Id}
+                                                onclick={handleStartEdit}></lightning-button>
+                                            <lightning-button class="slds-m-left_x-small" variant="destructive"
+                                                label="Delete" data-id={account.Id}
+                                                onclick={handleDeleteAccount}></lightning-button>
                                         </template>
                                     </template>
                                     <template if:false={editRecordId}>
-                                        <lightning-button variant="neutral" label="Edit" data-id={account.Id} onclick={handleStartEdit}></lightning-button>
-                                        <lightning-button class="slds-m-left_x-small" variant="destructive" label="Delete" data-id={account.Id} onclick={handleDeleteAccount}></lightning-button>
+                                        <lightning-button variant="neutral" label="Edit" data-id={account.Id}
+                                            onclick={handleStartEdit}></lightning-button>
+                                        <lightning-button class="slds-m-left_x-small" variant="destructive"
+                                            label="Delete" data-id={account.Id}
+                                            onclick={handleDeleteAccount}></lightning-button>
                                     </template>
                                 </div>
                             </div>
                         </div>
-    </lightning-card>
-</template>
+                    </lightning-card>
+                </template>
             </template>
 
             <!-- No Accounts Message -->

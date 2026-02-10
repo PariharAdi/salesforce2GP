@@ -4,7 +4,7 @@ public with sharing class AccountController {
     @AuraEnabled(cacheable=true)
     public static List<Account> getAccounts() {
         return [
-            SELECT Id, Name, Industry, Phone, BillingCity 
+            SELECT Id, Name, Industry, Phone, Description, BillingCity 
             FROM Account 
             ORDER BY Name
         ];
@@ -14,7 +14,7 @@ public with sharing class AccountController {
     @AuraEnabled(cacheable=true)
     public static Account getAccount(Id accountId) {
         return [
-            SELECT Id, Name, Industry, Phone, BillingCity, BillingState, Website
+            SELECT Id, Name, Industry, Phone, Description, BillingCity, BillingState, Website
             FROM Account 
             WHERE Id = :accountId 
             LIMIT 1
@@ -23,12 +23,13 @@ public with sharing class AccountController {
     
     // Method to create account
     @AuraEnabled()
-    public static String createAccount(String name, String industry, String phone) {
+    public static String createAccount(String name, String industry, String phone, String description) {
         try {
             Account newAccount = new Account(
                 Name = name,
                 Industry = industry,
-                Phone = phone
+                Phone = phone,
+                Description = description
             );
             insert newAccount;
             return newAccount.Id;
@@ -39,12 +40,13 @@ public with sharing class AccountController {
     
     // Method to update account
     @AuraEnabled
-    public static void updateAccount(Id accountId, String name, String industry, String phone) {
+    public static void updateAccount(Id accountId, String name, String industry, String phone, String description) {
         try {
             Account acc = [SELECT Id FROM Account WHERE Id = :accountId];
             acc.Name = name;
             acc.Industry = industry;
             acc.Phone = phone;
+            acc.Description = description;
             update acc;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
